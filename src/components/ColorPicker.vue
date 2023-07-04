@@ -243,9 +243,9 @@ if ("EyeDropper" in window) {
 }
 
 onMounted(() => {
-  changeMode(activeMode.value);
+  changeMode(activeMode.value, true);
   updateGradColor();
-  updatePreviews();
+  updatePreviews(true);
 });
 
 watch(paletteColor, () => {
@@ -273,7 +273,7 @@ watch(isShowPanel, () => {
   }
 });
 
-function changeMode(mode) {
+function changeMode(mode, init = false) {
   activeMode.value = mode;
   if (activeMode.value !== "solid") {
     setGradPickerPos();
@@ -286,7 +286,7 @@ function changeMode(mode) {
   }
   setPickerPos();
   updateGradColor();
-  updatePreviews();
+  updatePreviews(init);
 }
 
 async function dropColor() {
@@ -451,7 +451,7 @@ function updateGradColor() {
   }
 }
 
-function updatePreviews() {
+function updatePreviews(init = false) {
   const c1 = Utils.hsb2rgb(paletteColor);
   previewColor.value = `rgba(${c1.r}, ${c1.g}, ${c1.b}, ${c1.a})`;
   previewBackground.value = previewColor.value;
@@ -497,7 +497,7 @@ function updatePreviews() {
       emitVal.css = gradStyleStr;
       break;
   }
-  emit("colorChanged", emitVal);
+  if (!init) emit("colorChanged", emitVal);
 }
 
 function getDegreePickerPos() {
@@ -597,7 +597,7 @@ function setPickerPos() {
 function hexEvent(e) {
   if (/^[0-9A-Fa-f]{6}$/i.test(e.target.value)) {
     updateCurrentPallet(Utils.hex2hsb(e.target.value));
-    nextTick(setPickerPos)
+    nextTick(setPickerPos);
   }
 }
 defineExpose({
