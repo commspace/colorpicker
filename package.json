@@ -25,7 +25,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview --port 4173",
-    "pub": "nrm use npm && npm publish --access public && nrm use taobao",
+    "pub": "nrm use npm && npm publish --access public",
     "unpub": "npm unpublish @mci/vue-colorpicker --force --registry=https://registry.npmjs.org",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
   },
